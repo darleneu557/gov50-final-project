@@ -1,7 +1,7 @@
 ---
 title: "Gov 50 Final Project"
-author: "Your Name Here"
-description: "My final project"
+author: "Darlene Uzoigwe"
+description: "Darlene's final project"
 output:
   distill::distill_article:
     self_contained: false
@@ -11,4 +11,4 @@ output:
 
 ## Project thoughts
 
-I am interested in exploring data related to...
+I am interested in exploring data related to whether there is an increase in incarceration around presidential election times and then compare this to typically blue and red states. I also would be interested in exploring data related to how new voters and voters who turned out in one or both previous elections voted in the 2020 presidential election with a detailed portrait of the demographic composition and vote choices of the 2020 electorate. 
