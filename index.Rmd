@@ -12,3 +12,34 @@ output:
 ## Project thoughts
 
 I am interested in exploring data related to whether there is an increase in incarceration around presidential election times and then compare this to typically blue and red states. I also would be interested in exploring data related to how new voters and voters who turned out in one or both previous elections voted in the 2020 presidential election with a detailed portrait of the demographic composition and vote choices of the 2020 electorate. 
+
+
+## Milestone 2 
+-Change in Question
+
+After New York state repealed the New York legal statute which protected police disciplinary records, known as 50-a, a records request was submitted with New York City's Civilian Complaint Review Board which investigates public complaints on the conduct of NYPD officers. This request produced records about closed cases for every police officer still on the force as of late June 2020 who had at least one substantiated allegation against them. The records span decades, from September 1985 to January 2020. 
+
+The question that I am interested in investigating is how the type of complaint affects the outcome of board's decision on the substance of the complaint? In other words, I plan to examine the extent the nature of a complaint produces trends in the review board's decisions. For example, if complaints of excessive force, racial prejudice, or others result in higher rates of substantiated decisions from the Board. I hypothesize that inappropriate verbal conduct on the basis of gender and race will result in less substantiated decisions as historically those often go unaddressed. I believe that when there is a violation of rights such as unlawful entrance into a home, excessive force, or another outright abuse of authority there will be more substantiated decisions made by the Board as these actions are reflective of the New York police department as a whole and not the actions of an individual police officer. 
+
+
+My sample is a database of more than 12,000 civilian complaints filed against New York City police officers spanning from 1985 to 2020.Each record in the data lists the name, rank, shield number, and precinct of each officer as of today and at the time of the incident; the age, race and gender of the complainant and the officer; a category describing the alleged misconduct; and whether the CCRB concluded the officers’ conduct violated NYPD rules. My unit of analysis is the New York City police department. The explanatory variable of interest is the nature of the complaint made against a police officer. The variable is coded under fado_type as discourtesy, abuse of authority, and force with more specific descriptions like frisking attached. My outcome variable is the outcome of the review board's investigation of the complaint. Namely, the review board can rule that the complaint was substantiated which means the alleged misconduct occurred and violated the rules, they could rule an exoneration which means the alleged conduct occurred but did not violate NYPD laws, or unsubstantiated which means they could not conclude the conduct occurred. This variable is measured from Propublica's data base and relies on the CRRB's data. If I observe greater counts of substantiated claims for force or abuse of authority related complaints , this would provide support for my hypothesis. If, on the other hand, I observe less substantiated claims or similar  amount of complaints for discourtesy, this would provide evidence against my hypothesis. When I run my regression of CRRB claim decision on the forceful nature of complaint indicator variable, a positive, significant coefficient would indicate support for my hypothesis.
+
+
+```{r}
+library(tidyverse)
+library(readr)
+CCRB <- read_csv("C:/Users/User/Downloads/CCRB.csv")
+
+Complaints <- CCRB |>
+  group_by(`FADO Category`)|>
+ summarize(Count = sum(`Count of records`))
+Complaints
+
+Allegation_Distribution <- Complaints|> 
+  ggplot(mapping = aes(x = `FADO Category`, y = Count)) +
+  geom_col()
+Allegation_Distribution
+
+
+```
+
