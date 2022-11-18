@@ -42,4 +42,23 @@ Allegation_Distribution
 
 
 ```
+```{r}
+library(readr)
+Allegations <- read_csv("C:/Users/User/Downloads/allegations.csv")
+
+Allegations_Race <- Allegations |>
+  group_by(fado_type, complainant_ethnicity)|>
+  summarize(Count=n())
+Allegations_Race
+
+Visualize <- Allegations_Race |> 
+  ggplot(mapping = aes(x = complainant_ethnicity, y = Count )) +
+  geom_col() +
+  labs(x = "Complainant Ethnicity", y = "Count of Complaints", title = "Racial Breakdown of Complaints")
+
+  
+Visualize
+
+```
+The above data visualization of the complaint ethnicity v.s the count of complaints is important in answering my research question as it situates the importance and stakes of my findings. Within the graph, we can clear see that Black and Hispanic people respectively submit the most complaints within the time period which is indicative of the fact that they are most at risk for any inconsistencies in outcome of reviews by the board. It is also important to take into account the tibble which reports the count of complaints by race and it reports that for every type of FADO type, Black people have the highest amount of complaints. From offensive language, force, discourtesy, to abuse of authority, the data suggests that Black people bear the brunt of the dissatisfaction with the police force which is important in applying nuance and layers of analysis to the type of complaints that receive substantiated decisions. Moving forward, I'd be interested in taking a random sample of complaints from each category and calculating the proportion of substantiated complaints for each race. 
 
