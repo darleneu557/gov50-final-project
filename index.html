@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-1-1.png","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/header-attrs-2.16/header-attrs.js","index_files/header-attrs-2.17/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-1-1.png","index_files/figure-html5/unnamed-chunk-10-1.png","index_files/figure-html5/unnamed-chunk-11-1.png","index_files/figure-html5/unnamed-chunk-12-1.png","index_files/figure-html5/unnamed-chunk-13-1.png","index_files/figure-html5/unnamed-chunk-14-1.png","index_files/figure-html5/unnamed-chunk-15-1.png","index_files/figure-html5/unnamed-chunk-16-1.png","index_files/figure-html5/unnamed-chunk-17-1.png","index_files/figure-html5/unnamed-chunk-18-1.png","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/header-attrs-2.16/header-attrs.js","index_files/header-attrs-2.17/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1473,6 +1473,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
   <!--/radix_placeholder_distill-->
   <script src="index_files/header-attrs-2.16/header-attrs.js"></script>
+  <script src="index_files/kePrint-0.0.1/kePrint.js"></script>
+  <link href="index_files/lightable-0.0.1/lightable.css" rel="stylesheet" />
   <script src="index_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
   <script src="index_files/popper-2.6.0/popper.min.js"></script>
   <link href="index_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -1587,7 +1589,636 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p><img src="index_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
 </div>
 <p>The above data visualization of the complaint ethnicity v.s the count of complaints is important in answering my research question as it situates the importance and stakes of my findings. Within the graph, we can clear see that Black and Hispanic people respectively submit the most complaints within the time period which is indicative of the fact that they are most at risk for any inconsistencies in outcome of reviews by the board. It is also important to take into account the tibble which reports the count of complaints by race and it reports that for every type of FADO type, Black people have the highest amount of complaints. From offensive language, force, discourtesy, to abuse of authority, the data suggests that Black people bear the brunt of the dissatisfaction with the police force which is important in applying nuance and layers of analysis to the type of complaints that receive substantiated decisions. Moving forward, I’d be interested in taking a random sample of complaints from each category and calculating the proportion of substantiated complaints for each race.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>Allegations</span><span class='op'>$</span><span class='va'>board_disposition</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code> [1] &quot;Substantiated (Command Lvl Instructions)&quot;
+ [2] &quot;Substantiated (Charges)&quot;                 
+ [3] &quot;Substantiated (Command Discipline A)&quot;    
+ [4] &quot;Substantiated (Formalized Training)&quot;     
+ [5] &quot;Unsubstantiated&quot;                         
+ [6] &quot;Exonerated&quot;                              
+ [7] &quot;Substantiated (Command Discipline B)&quot;    
+ [8] &quot;Substantiated (Instructions)&quot;            
+ [9] &quot;Substantiated (Command Discipline)&quot;      
+[10] &quot;Substantiated (No Recommendations)&quot;      
+[11] &quot;Substantiated (MOS Unidentified)&quot;        </code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>allegations</span> <span class='op'>&lt;-</span> <span class='va'>Allegations</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span> Level <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span><span class='va'>board_disposition</span> <span class='op'>==</span> <span class='st'>"Exonerated"</span> <span class='op'>~</span> <span class='fl'>1</span></span>
+<span>                            ,<span class='va'>board_disposition</span> <span class='op'>==</span> <span class='st'>"Unsubstantiated"</span> <span class='op'>~</span> <span class='fl'>2</span>,<span class='va'>board_disposition</span> <span class='op'>==</span> <span class='st'>"Substantiated (MOS Unidentified)"</span> <span class='op'>~</span>  <span class='fl'>3</span>,</span>
+<span>                   <span class='va'>board_disposition</span> <span class='op'>==</span> <span class='st'>"Substantiated (No Recommendations)"</span> <span class='op'>~</span>  <span class='fl'>4</span>,</span>
+<span>                   <span class='va'>board_disposition</span> <span class='op'>==</span> <span class='st'>"Substantiated (Instructions)"</span><span class='op'>~</span> <span class='fl'>5</span>, </span>
+<span>                   <span class='va'>board_disposition</span> <span class='op'>==</span> <span class='st'>"Substantiated (Command Lvl Instructions)"</span> <span class='op'>~</span> <span class='fl'>6</span>,</span>
+<span>                   <span class='va'>board_disposition</span> <span class='op'>==</span> <span class='st'>"Substantiated (Formalized Training)"</span> <span class='op'>~</span>  <span class='fl'>7</span>,</span>
+<span>                   <span class='va'>board_disposition</span> <span class='op'>==</span> <span class='st'>"Substantiated (Command Discipline A)"</span> <span class='op'>~</span>  <span class='fl'>8</span>,</span>
+<span>                   <span class='va'>board_disposition</span> <span class='op'>==</span> <span class='st'>"Substantiated (Command Discipline B)"</span><span class='op'>~</span> <span class='fl'>9</span>,</span>
+<span>                   <span class='va'>board_disposition</span> <span class='op'>==</span> <span class='st'>"Substantiated (Charges)"</span> <span class='op'>~</span>  <span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='va'>allegations</span></span></code></pre>
+</div>
+<pre><code># A tibble: 33,358 × 28
+   unique_mo…¹ first…² last_…³ comma…⁴ shiel…⁵ compl…⁶ month…⁷ year_…⁸
+         &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1       10004 Jonath… Ruiz    078 PCT    8409   42835       7    2019
+ 2       10007 John    Sears   078 PCT    5952   24601      11    2011
+ 3       10007 John    Sears   078 PCT    5952   24601      11    2011
+ 4       10007 John    Sears   078 PCT    5952   26146       7    2012
+ 5       10009 Noemi   Sierra  078 PCT   24058   40253       8    2018
+ 6       10012 Paula   Smith   078 PCT    4021   37256       5    2017
+ 7       10014 Malachy Sulliv… 078 PCT    4143   33969      11    2015
+ 8       10017 Fazle   Tanim   078 PCT   15187   40070       8    2018
+ 9       10017 Fazle   Tanim   078 PCT   15187   41927       3    2019
+10       10017 Fazle   Tanim   078 PCT   15187   41927       3    2019
+# … with 33,348 more rows, 20 more variables: month_closed &lt;dbl&gt;,
+#   year_closed &lt;dbl&gt;, command_at_incident &lt;chr&gt;,
+#   rank_abbrev_incident &lt;chr&gt;, rank_abbrev_now &lt;chr&gt;,
+#   rank_now &lt;chr&gt;, rank_incident &lt;chr&gt;, mos_ethnicity &lt;chr&gt;,
+#   mos_gender &lt;chr&gt;, mos_age_incident &lt;dbl&gt;,
+#   complainant_ethnicity &lt;chr&gt;, complainant_gender &lt;chr&gt;,
+#   complainant_age_incident &lt;dbl&gt;, fado_type &lt;chr&gt;, …</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://broom.tidymodels.org/'>broom</a></span><span class='op'>)</span></span>
+<span><span class='va'>fit.allegations</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Level</span> <span class='op'>~</span> <span class='va'>complainant_ethnicity</span>, data <span class='op'>=</span> <span class='va'>allegations</span><span class='op'>)</span></span>
+<span><span class='va'>fit.allegations</span></span></code></pre>
+</div>
+<pre><code>
+Call:
+lm(formula = Level ~ complainant_ethnicity, data = allegations)
+
+Coefficients:
+                    (Intercept)       complainant_ethnicityAsian  
+                         4.1406                          -0.6492  
+     complainant_ethnicityBlack    complainant_ethnicityHispanic  
+                        -0.9414                          -0.9018  
+complainant_ethnicityOther Race     complainant_ethnicityRefused  
+                        -0.6489                          -0.8532  
+   complainant_ethnicityUnknown       complainant_ethnicityWhite  
+                        -0.7393                          -0.6976  </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>fit.allegations</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>
+Call:
+lm(formula = Level ~ complainant_ethnicity, data = allegations)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-3.141 -2.199 -1.199 -1.199  6.801 
+
+Coefficients:
+                                Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)                       4.1406     0.3874  10.689   &lt;2e-16
+complainant_ethnicityAsian       -0.6492     0.4103  -1.582   0.1136
+complainant_ethnicityBlack       -0.9414     0.3881  -2.426   0.0153
+complainant_ethnicityHispanic    -0.9018     0.3894  -2.316   0.0206
+complainant_ethnicityOther Race  -0.6489     0.4055  -1.600   0.1096
+complainant_ethnicityRefused     -0.8532     0.4334  -1.968   0.0490
+complainant_ethnicityUnknown     -0.7393     0.3992  -1.852   0.0641
+complainant_ethnicityWhite       -0.6976     0.3919  -1.780   0.0751
+                                   
+(Intercept)                     ***
+complainant_ethnicityAsian         
+complainant_ethnicityBlack      *  
+complainant_ethnicityHispanic   *  
+complainant_ethnicityOther Race    
+complainant_ethnicityRefused    *  
+complainant_ethnicityUnknown    .  
+complainant_ethnicityWhite      .  
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 3.099 on 28182 degrees of freedom
+  (5168 observations deleted due to missingness)
+Multiple R-squared:  0.001066,  Adjusted R-squared:  0.0008175 
+F-statistic: 4.295 on 7 and 28182 DF,  p-value: 9.298e-05</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://broom.tidymodels.org/'>broom</a></span><span class='op'>)</span></span>
+<span><span class='va'>fit1.allegations</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>complainant_age_incident</span> <span class='op'>~</span> <span class='va'>complainant_ethnicity</span>, data <span class='op'>=</span> <span class='va'>allegations</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>fit1.allegations</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>
+Call:
+lm(formula = complainant_age_incident ~ complainant_ethnicity, 
+    data = allegations)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4327.3    -9.3    -2.3     8.2    69.2 
+
+Coefficients:
+                                Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)                      31.9687     3.5555   8.991   &lt;2e-16
+complainant_ethnicityAsian        2.3576     3.7652   0.626    0.531
+complainant_ethnicityBlack        0.3246     3.5622   0.091    0.927
+complainant_ethnicityHispanic    -0.1402     3.5734  -0.039    0.969
+complainant_ethnicityOther Race   0.1542     3.7202   0.041    0.967
+complainant_ethnicityRefused      3.3765     3.9814   0.848    0.396
+complainant_ethnicityUnknown     -5.6550     3.6892  -1.533    0.125
+complainant_ethnicityWhite        4.7792     3.5965   1.329    0.184
+                                   
+(Intercept)                     ***
+complainant_ethnicityAsian         
+complainant_ethnicityBlack         
+complainant_ethnicityHispanic      
+complainant_ethnicityOther Race    
+complainant_ethnicityRefused       
+complainant_ethnicityUnknown       
+complainant_ethnicityWhite         
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 28.44 on 28328 degrees of freedom
+  (5022 observations deleted due to missingness)
+Multiple R-squared:  0.003877,  Adjusted R-squared:  0.00363 
+F-statistic: 15.75 on 7 and 28328 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://broom.tidymodels.org/'>broom</a></span><span class='op'>)</span></span>
+<span><span class='va'>fit2.allegations</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Level</span> <span class='op'>~</span> <span class='va'>fado_type</span>  , data <span class='op'>=</span> <span class='va'>allegations</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>fit2.allegations</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>
+Call:
+lm(formula = Level ~ fado_type, data = allegations)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-2.577 -1.577 -1.394 -0.394  7.606 
+
+Coefficients:
+                            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                  3.57699    0.02185 163.718  &lt; 2e-16 ***
+fado_typeDiscourtesy        -0.39583    0.05036  -7.861 3.94e-15 ***
+fado_typeForce              -1.18302    0.04142 -28.559  &lt; 2e-16 ***
+fado_typeOffensive Language -0.51533    0.11421  -4.512 6.44e-06 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 3.062 on 32503 degrees of freedom
+  (851 observations deleted due to missingness)
+Multiple R-squared:  0.02461,   Adjusted R-squared:  0.02452 
+F-statistic: 273.3 on 3 and 32503 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>Time</span> <span class='op'>&lt;-</span> <span class='va'>Allegations</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>unique_mos_id</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>Total_Count <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='va'>Time</span></span></code></pre>
+</div>
+<pre><code># A tibble: 3,996 × 2
+   unique_mos_id Total_Count
+           &lt;dbl&gt;       &lt;int&gt;
+ 1             2          10
+ 2             5           3
+ 3            11           5
+ 4            21           8
+ 5            23          14
+ 6            28           5
+ 7            38           3
+ 8            43           5
+ 9            73           2
+10            83           8
+# … with 3,986 more rows</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>allegations</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>Level</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-10-1.png" width="624" /></p>
+</div>
+1 STAR YOU ARE STATISTICALLY SIGNFICANT AT THE 0.01 LEVEL AND SO ON
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>allegations</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>complainant_ethnicity</span>, y<span class='op'>=</span> <span class='va'>Level</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_boxplot.html'>geom_boxplot</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-11-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span><span class='op'>(</span><span class='va'>allegations</span><span class='op'>$</span><span class='va'>Level</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='va'>allegations</span><span class='op'>$</span><span class='va'>complainant_ethnicity</span> <span class='op'>==</span> <span class='st'>"White"</span><span class='op'>)</span><span class='op'>]</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] 2</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span><span class='op'>(</span><span class='va'>allegations</span><span class='op'>$</span><span class='va'>Level</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='va'>allegations</span><span class='op'>$</span><span class='va'>complainant_ethnicity</span> <span class='op'>==</span> <span class='st'>"Black"</span><span class='op'>)</span><span class='op'>]</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] 2</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>allegations</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>Level</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y<span class='op'>=</span><span class='va'>..density..</span><span class='op'>)</span>, binwidth <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span><span class='op'>(</span><span class='op'>~</span><span class='va'>complainant_ethnicity</span>, nrow<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-13-1.png" width="624" /></p>
+</div>
+<h2 id="final-report">Final Report</h2>
+<p>Darlene Uzoigwe
+GOV 50
+Dan Baissa
+14 December 2022
+Project Report
+Introduction</p>
+<p>In the aftermath of the tragic death of George Floyd at the hands of police enforcement, protests across the globe erupted, calling for racial justice and the end of anti-black violence.This outcry for change has resulted in drastic developments such as the dismantling of police departments as the institutional treatment of black Americans by police departments and officers pushed to the forefront of national debate. Proponents of this racial movement such as BLM Founder Alica Garza suggest that the outcry is long-overdue in ushering in accountability for the abuse of African-Americans by the hands of law officers. However, there are those who believe that the criminal justice system and internal review process of our police departments are capable of identifying misconduct and acting accordingly. Under this premise, racially motivated police misconduct are the actions of a few as opposed to a reflection of the entire police system, thus, radical changes are uncalled for. In determining the necessity of a solution, we must examine the problem at hand. Thus, this data research investigates the degree to which the race of a complainant affects the outcome of a review board’s decision on the substance of the complaint? In other words, the statistical extent to which the race of the complainant produces significant trends in the complainant review board’s decisions. This inquiry is relevant and of interest due to the financial investment the government applies to police enforcement. Over the past three decades, U.S. cities have allocated larger and larger shares of their budgets towards law enforcement. Today, the U.S. collectively spends $100 billion a year on policing and a further $80 billion on incarceration. Even though crime levels have dropped substantially over the last 30 years in line with the spending uptake, a report released last month argues that this occurred in spite of higher police budgets. Statistical evidence of a racial indicator of review outcomes could be useful in the progression of the call for change. In the light of recent debates of BLM, the initial hypothesis is that black and Hispanic complainants will correspond with lower levels of severity in review board decisions due to the discrimination and bias often perpetuated against them as well as the history of stop-and-frisk which disproportionately affects these demographics. The regression of the level of CRRB board decision against the race of the complainant variable should produce a negative, significant coefficient if it supports the hypothesis.</p>
+<p>Throughout this inquiry, the data set reference was obtained from the New York City Civilian Complaint Review Board. After New York state repealed the New York legal statute which protected police disciplinary records, known as 50-a, a records request was submitted with New York City’s Civilian Complaint Review Board which investigates public complaints on the conduct of NYPD officers. This request produced records about closed cases for every police officer still on the force as of late June 2020 who had at least one substantiated allegation against them. The records span decades, from September 1985 to January 2020. The database contains more than 12,000 civilian complaints filed against New York City police officers. Each record in the data lists the name, rank, shield number, and precinct of each officer as of today and at the time of the incident; the age, race and gender of the complainant and the officer; a category describing the alleged misconduct; and whether the CCRB concluded the officers’ conduct violated NYPD rules. My unit of analysis is the New York City police department and this is a cross-sectional. The independent variable of interest is the race of the complainant in the record. The dependent variable of interest is the severity of the outcome administered to the police officer in question on a 1 to 8 scale. The review board can rule that the complaint was substantiated which means the alleged misconduct occurred and violated the rules, they could rule an exoneration which means the alleged conduct occurred but did not violate NYPD laws, or unsubstantiated which means they could not conclude the conduct occurred.The variable coded under fado_type describes different types of misconduct such as discourtesy, abuse of authority, and force with more specific descriptions like frisking attached. However, the board could rule that the police officer is exonerated, that the claim is unsubstantiated, the claim is substantiated but the police officer is unidentified, the claim is substantiated but with no outline recommendations, substantiated with reprimanding instructions, substantiated to the extent of command level instructions, substantiated to the extent of formalized training, substantiated to Command Discipline A, substantiated to Command Discipline B, and Substantiated to the point of criminal charges. This chain of consequences is ordered in increasing severity and was coded as such within the data on a 1-8 scale for regression purposes. The histogram summarizes the dependent variable and shows the distribution of the board levels with a level of 2 as the most common outcome.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>allegations</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>Level</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-14-1.png" width="624" /></p>
+</div>
+<p>Results Section</p>
+<p>In investigating this inquiry, a series of visual demonstrations of the data were produced. Below is a bar plot which depicts the total counts of each fado_type of complaint within the data sample including abuse of authority, discourtesy, force, and offensive language. According to this bar plot, the highest complaint type is abuse of authority with over 20,000 complaints. The second bar plot entitled ” Racial Breakdown of Complaints” shows the total counts of complaints for each racial demographic, revealing the two highest complainant groups to be Black and Hispanic. Black individuals reaching over 15,000 complaints as opposed to the less than 5000 among white complainants. This suggests the issue of police misconduct to be understood as a prevalent issue within the black community.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readr.tidyverse.org'>readr</a></span><span class='op'>)</span></span>
+<span><span class='va'>CCRB</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"C:/Users/User/Downloads/CCRB.csv"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>Complaints</span> <span class='op'>&lt;-</span> <span class='va'>CCRB</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>`FADO Category`</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
+<span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>Count <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>`Count of records`</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='va'>Complaints</span></span></code></pre>
+</div>
+<pre><code># A tibble: 4 × 2
+  `FADO Category`    Count
+  &lt;chr&gt;              &lt;dbl&gt;
+1 Abuse of Authority 20292
+2 Discourtesy         4677
+3 Force               7635
+4 Offensive Language   753</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>Allegation_Distribution</span> <span class='op'>&lt;-</span> <span class='va'>Complaints</span><span class='op'>|&gt;</span> </span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>`FADO Category`</span>, y <span class='op'>=</span> <span class='va'>Count</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Count of Complaint Types"</span><span class='op'>)</span></span>
+<span><span class='va'>Allegation_Distribution</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-15-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readr.tidyverse.org'>readr</a></span><span class='op'>)</span></span>
+<span><span class='va'>Allegations</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"C:/Users/User/Downloads/allegations.csv"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>Allegations_Race</span> <span class='op'>&lt;-</span> <span class='va'>Allegations</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>fado_type</span>, <span class='va'>complainant_ethnicity</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>Count<span class='op'>=</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='va'>Allegations_Race</span></span></code></pre>
+</div>
+<pre><code># A tibble: 36 × 3
+# Groups:   fado_type [4]
+   fado_type          complainant_ethnicity Count
+   &lt;chr&gt;              &lt;chr&gt;                 &lt;int&gt;
+ 1 Abuse of Authority American Indian          48
+ 2 Abuse of Authority Asian                   330
+ 3 Abuse of Authority Black                 10359
+ 4 Abuse of Authority Hispanic               3676
+ 5 Abuse of Authority Other Race              390
+ 6 Abuse of Authority Refused                 173
+ 7 Abuse of Authority Unknown                 580
+ 8 Abuse of Authority White                  1677
+ 9 Abuse of Authority &lt;NA&gt;                   3059
+10 Discourtesy        American Indian           8
+# … with 26 more rows</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>Visualize</span> <span class='op'>&lt;-</span> <span class='va'>Allegations_Race</span> <span class='op'>|&gt;</span> </span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>complainant_ethnicity</span>, y <span class='op'>=</span> <span class='va'>Count</span> <span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Complainant Ethnicity"</span>, y <span class='op'>=</span> <span class='st'>"Count of Complaints"</span>, title <span class='op'>=</span> <span class='st'>"Racial Breakdown of Complaints"</span><span class='op'>)</span></span>
+<span></span>
+<span>  </span>
+<span><span class='va'>Visualize</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-16-1.png" width="624" /></p>
+</div>
+<p>Beyond racial demographics and complaint categories, visual representations of the main relationship of interest was produced alongside a main regression of interest. The box plot entitled Complainant Ethnicity v.s Outcome Level, shows that the median level for each of the racial demographics is at a level two which means that 50 percent of the data falls above a level two and 50 percent falls below a level two for each race. A level two signifies that the complaint was rendered unsubstantiated by the review board. The facet wrapped histograms beneath show the density of outcome for each racial demographic at a bin width of 1. These histograms show that Black and Hispanic have the highest amounts of claims that are considered unsubstantiated by the review board as they have the higher densities of about 0.5 at level two than other races. This is significant because it shows that Black and Hispanic complaints are resulting in lower amounts of punitive outcomes for officers even on the very basic level of the substance of their complaints.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>allegations</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>complainant_ethnicity</span>, y<span class='op'>=</span> <span class='va'>Level</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_boxplot.html'>geom_boxplot</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Complainant Ethnicity"</span>, y <span class='op'>=</span> <span class='st'>"Outcome Level"</span>, title <span class='op'>=</span> <span class='st'>"Complaintant Ethnicity v.s Outcome Level"</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-17-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>allegations</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>Level</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y<span class='op'>=</span><span class='va'>..density..</span><span class='op'>)</span>, binwidth <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span><span class='op'>(</span><span class='op'>~</span><span class='va'>complainant_ethnicity</span>, nrow<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-18-1.png" width="624" /></p>
+</div>
+<p>The regression immediately beneath is a singular regression between the race of the complainant and the outcome severity level on the scale from 1 to 8. Within this regression, a 1 unit increase on the black complainant ethnicity variable, the complainant is Black, is associated with a -0.244 decrease in the outcome severity level. Additionally, a 1 unit increase on the Hispanic complainant ethnicity variable, the complainant is Hispanic, is associated with a -0.204 decrease in the outcome severity level. The coefficient for black complainants is significant at the 0.001 value because its p value is less than 0.001 which makes it very statistically significant and unlikely to be due to chance. The coefficient for Hispanic complainants is significant at the 0.01 level because it has a p value of 0.004 which is less than an alpha of 0.01 this it is significantly significant. These negative coefficients for this regression suggest that Black and Hispanic complainants are associated with lower penalties for the officers in question. Within the multiple regression, we take into account the race of the officer. A 1 unit increase on the black complainant ethnicity variable, the complainant is Black, is associated with a -0.245 decrease in the outcome severity level, holding the member of service ethnicity fixed. Additionally, a 1 unit increase on the Hispanic complainant ethnicity variable, the complainant is Hispanic, is associated with a -0.207 decrease in the outcome severity level, holding the member of service ethnicity fixed. The coefficient for black complainants is significant at the 0.001 level because it has a p value less than 0.001 thus it is significantly significant. These negative coefficients for this regression suggest that Black and Hispanic complainants are associated with lower penalties for the officers in question even with the race of the intervening officer held constant.The coefficient for black complainants is significant at the 0.001 value because its p value is less than 0.001 which makes it very statistically significant and unlikely to be due to chance.
+The coefficient for Hispanic complainants is significant at the 0.01 level because it has a p value of 0.004 which is less than an alpha of 0.01 this it is significantly significant.
+These results do not prove causality, but suggest a negative correlation.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://broom.tidymodels.org/'>broom</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://vincentarelbundock.github.io/modelsummary/'>modelsummary</a></span><span class='op'>)</span></span>
+<span><span class='va'>fit.allegations</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Level</span> <span class='op'>~</span> <span class='va'>complainant_ethnicity</span>, data <span class='op'>=</span> <span class='va'>allegations</span><span class='op'>)</span></span>
+<span><span class='va'>fit.allegations</span></span></code></pre>
+</div>
+<pre><code>
+Call:
+lm(formula = Level ~ complainant_ethnicity, data = allegations)
+
+Coefficients:
+                    (Intercept)       complainant_ethnicityAsian  
+                         4.1406                          -0.6492  
+     complainant_ethnicityBlack    complainant_ethnicityHispanic  
+                        -0.9414                          -0.9018  
+complainant_ethnicityOther Race     complainant_ethnicityRefused  
+                        -0.6489                          -0.8532  
+   complainant_ethnicityUnknown       complainant_ethnicityWhite  
+                        -0.7393                          -0.6976  </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>ca</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"complainant_ethnicityBlack"</span><span class='op'>=</span> <span class='st'>"Black Complainant"</span>, <span class='st'>"complainant_ethnicityAmerican Indian"</span><span class='op'>=</span> <span class='st'>"American Indian Complainant"</span>,<span class='st'>"complainant_ethnicityAsian"</span> <span class='op'>=</span> <span class='st'>"Asian Complainant"</span>, <span class='st'>"complainant_ethnicityHispanic"</span> <span class='op'>=</span> <span class='st'>"Hispanic Complainant"</span>, <span class='st'>"complainant_ethnictyOther Race"</span><span class='op'>=</span><span class='st'>"Complaintant of Other Race"</span>, <span class='st'>"complaintantethnicityRefused"</span> <span class='op'>=</span> <span class='st'>"Refused Racial Identification"</span>, <span class='st'>"complaintantethnicityUnknown"</span> <span class='op'>=</span> <span class='st'>"Race Unknown"</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://vincentarelbundock.github.io/modelsummary/reference/modelsummary.html'>modelsummary</a></span><span class='op'>(</span><span class='va'>fit.allegations</span>,stars <span class='op'>=</span> <span class='cn'>TRUE</span>, coef_map <span class='op'>=</span> <span class='va'>ca</span>, statistic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"s.e. = {std.error}"</span>,</span>
+<span>                                         <span class='st'>"p = {p.value}"</span><span class='op'>)</span>,</span>
+<span>                           gof_map <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"nobs"</span>, <span class='st'>"r.squared"</span>, <span class='st'>"adj.r.squared"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Model 1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Black Complainant
+</td>
+<td style="text-align:center;">
+−0.941*
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+s.e. = 0.388
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+p = 0.015
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Asian Complainant
+</td>
+<td style="text-align:center;">
+−0.649
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+s.e. = 0.410
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+p = 0.114
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hispanic Complainant
+</td>
+<td style="text-align:center;">
+−0.902*
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+s.e. = 0.389
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+p = 0.021
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+28190
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.0008
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup> + p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001
+</td>
+</tr>
+</tfoot>
+</table>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://broom.tidymodels.org/'>broom</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://vincentarelbundock.github.io/modelsummary/'>modelsummary</a></span><span class='op'>)</span></span>
+<span><span class='va'>allegations</span><span class='op'>$</span><span class='va'>mos_ethnicity</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/relevel.html'>relevel</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>allegations</span><span class='op'>$</span><span class='va'>mos_ethnicity</span><span class='op'>)</span>, ref<span class='op'>=</span><span class='st'>"White"</span><span class='op'>)</span></span>
+<span><span class='va'>allegations</span><span class='op'>$</span><span class='va'>complainant_ethnicity</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/relevel.html'>relevel</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>allegations</span><span class='op'>$</span><span class='va'>complainant_ethnicity</span><span class='op'>)</span>, ref <span class='op'>=</span> <span class='st'>"White"</span><span class='op'>)</span></span>
+<span><span class='va'>fit5.allegations</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Level</span> <span class='op'>~</span> <span class='va'>complainant_ethnicity</span> <span class='op'>+</span> <span class='va'>mos_ethnicity</span>, data <span class='op'>=</span> <span class='va'>allegations</span><span class='op'>)</span></span>
+<span><span class='va'>cm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"complainant_ethnicityBlack"</span><span class='op'>=</span> <span class='st'>"Black Complainant"</span>, <span class='st'>"complainant_ethnicityAmerican Indian"</span><span class='op'>=</span> <span class='st'>"American Indian Complainant"</span>,<span class='st'>"complainant_ethnicityAsian"</span> <span class='op'>=</span> <span class='st'>"Asian Complainant"</span>, <span class='st'>"complainant_ethnicityHispanic"</span> <span class='op'>=</span> <span class='st'>"Hispanic Complainant"</span>, <span class='st'>"complainant_ethnictyOther Race"</span><span class='op'>=</span><span class='st'>"Complaintant of Other Race"</span>, <span class='st'>"complaintantethnicityRefused"</span> <span class='op'>=</span> <span class='st'>"Refused Racial Identification"</span>, <span class='st'>"complaintantethnicityUnknown"</span> <span class='op'>=</span> <span class='st'>"Race Unknown"</span>, <span class='st'>"mosethnicityAmerican Indian"</span> <span class='op'>=</span> <span class='st'>"American Indian Member of Service"</span>, <span class='st'>"mosethnicityAsian"</span><span class='op'>=</span> <span class='st'>"Asian Member of Service"</span>, <span class='st'>"mosethnicityBlack"</span><span class='op'>=</span><span class='st'>"Black Member of Service"</span>, <span class='st'>"mosethnicityHispanic"</span><span class='op'>=</span> <span class='st'>"Hispanic Member of Service"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'><a href='https://vincentarelbundock.github.io/modelsummary/reference/modelsummary.html'>modelsummary</a></span><span class='op'>(</span><span class='va'>fit5.allegations</span>,stars <span class='op'>=</span> <span class='cn'>TRUE</span>, coef_map <span class='op'>=</span> <span class='va'>cm</span>,</span>
+<span>                           statistic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"s.e. = {std.error}"</span>,</span>
+<span>                                         <span class='st'>"p = {p.value}"</span><span class='op'>)</span>,</span>
+<span>                           gof_map <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"nobs"</span>, <span class='st'>"r.squared"</span>, <span class='st'>"adj.r.squared"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Model 1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Black Complainant
+</td>
+<td style="text-align:center;">
+−0.245***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+s.e. = 0.064
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+p = &lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+American Indian Complainant
+</td>
+<td style="text-align:center;">
+0.718+
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+s.e. = 0.392
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+p = 0.067
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Asian Complainant
+</td>
+<td style="text-align:center;">
+0.030
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+s.e. = 0.148
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+p = 0.842
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hispanic Complainant
+</td>
+<td style="text-align:center;">
+−0.207**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+s.e. = 0.071
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+p = 0.004
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+28190
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.002
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.001
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup> + p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001
+</td>
+</tr>
+</tfoot>
+</table>
+</div>
+<p>Conclusion</p>
+<p>In summary, the data analysis above suggests a correlation between the Black and Hispanic race of the complainant and a decrease in the severity level of the review board’s decision even when the ethnicity of the member of service is held constant. This supports my hypothesis that black and Hispanic complainants will correspond with lower levels of severity in review board decisions because we saw a negative correlation or a decrease in outcome severity level within these two populations. Although we can not prove causality and would theoretically need a controlled experiment to do so, this is a significant starting point in indicating statistical significance between these two factors and should warrant investigation into the effect race has on review board decisions more broadly. In future studies, it would be helpful to obtain any available notes in these review decisions and code them in order to explain outcome decisions opposed to only observing the outcome without rationale, a limitation of this study. It would also be interesting to run a similar study comparing the race of the complainant and the outcome severity level for complaints that were later found to be substantiated because it would an additional dimension of analysis in terms of the effect race has on review board negligence in decisions which has important implications for vulnerable demographics.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

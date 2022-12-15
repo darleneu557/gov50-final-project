@@ -62,3 +62,177 @@ Visualize
 ```
 The above data visualization of the complaint ethnicity v.s the count of complaints is important in answering my research question as it situates the importance and stakes of my findings. Within the graph, we can clear see that Black and Hispanic people respectively submit the most complaints within the time period which is indicative of the fact that they are most at risk for any inconsistencies in outcome of reviews by the board. It is also important to take into account the tibble which reports the count of complaints by race and it reports that for every type of FADO type, Black people have the highest amount of complaints. From offensive language, force, discourtesy, to abuse of authority, the data suggests that Black people bear the brunt of the dissatisfaction with the police force which is important in applying nuance and layers of analysis to the type of complaints that receive substantiated decisions. Moving forward, I'd be interested in taking a random sample of complaints from each category and calculating the proportion of substantiated complaints for each race. 
 
+```{r}
+unique(Allegations$board_disposition)
+  
+
+```
+```{r}
+allegations <- Allegations|>
+  mutate( Level = case_when(board_disposition == "Exonerated" ~ 1
+                            ,board_disposition == "Unsubstantiated" ~ 2,board_disposition == "Substantiated (MOS Unidentified)" ~  3,
+                   board_disposition == "Substantiated (No Recommendations)" ~  4,
+                   board_disposition == "Substantiated (Instructions)"~ 5, 
+                   board_disposition == "Substantiated (Command Lvl Instructions)" ~ 6,
+                   board_disposition == "Substantiated (Formalized Training)" ~  7,
+                   board_disposition == "Substantiated (Command Discipline A)" ~  8,
+                   board_disposition == "Substantiated (Command Discipline B)"~ 9,
+                   board_disposition == "Substantiated (Charges)" ~  10))
+allegations
+
+```
+```{r}
+
+```
+
+```{r}
+library(broom)
+fit.allegations <- lm(Level ~ complainant_ethnicity, data = allegations)
+fit.allegations
+summary(fit.allegations)
+```
+```{r}
+library(broom)
+fit1.allegations <- lm(complainant_age_incident ~ complainant_ethnicity, data = allegations)
+summary(fit1.allegations)
+```
+```{r}
+library(broom)
+fit2.allegations <- lm(Level ~ fado_type  , data = allegations)
+summary(fit2.allegations)
+```
+```{r}
+Time <- Allegations |>
+  group_by(unique_mos_id)|>
+  summarize(Total_Count = n())
+Time
+```
+
+
+```{r}
+allegations|>
+  ggplot(aes(x=Level)) +
+  geom_histogram()
+```
+1 STAR YOU ARE STATISTICALLY SIGNFICANT AT THE 0.01 LEVEL AND SO ON 
+```{r}
+allegations|>
+  ggplot(aes(x=complainant_ethnicity, y= Level))+
+  geom_boxplot()
+```
+```{r}
+median(allegations$Level[which(allegations$complainant_ethnicity == "White")], na.rm = TRUE)
+median(allegations$Level[which(allegations$complainant_ethnicity == "Black")], na.rm = TRUE)
+```
+```{r}
+allegations|>
+  ggplot(aes(x=Level)) +
+  geom_histogram(aes(y=..density..), binwidth = 1)+
+  facet_wrap(~complainant_ethnicity, nrow=2)
+```
+## Final Report
+Darlene Uzoigwe 
+GOV 50 
+Dan Baissa
+14 December 2022 
+                                         Project Report 
+Introduction 
+
+In the aftermath of the tragic death of George Floyd at the hands of police enforcement, protests across the globe erupted, calling for racial justice and the end of anti-black violence.This outcry for change has resulted in drastic developments such as the dismantling of police departments as the institutional treatment of black Americans by police departments and officers  pushed to the forefront of national debate. Proponents of this racial movement such as BLM Founder Alica Garza suggest that the outcry is long-overdue in ushering in accountability for the abuse of African-Americans by the hands of law officers. However, there are those who believe that the criminal justice system and internal review  process of our police departments are capable of identifying misconduct and acting accordingly. Under this premise,  racially motivated police misconduct are the actions of a few as opposed to a reflection of the entire police system, thus, radical changes are uncalled for. In determining the necessity of a solution, we must examine the problem at hand. Thus, this data research investigates the degree to which the race of a complainant affects the outcome of a  review board's decision on the substance of the complaint? In other words, the statistical extent to which the race of the complainant produces significant trends in the complainant review board’s decisions. This inquiry is relevant and of interest due to the financial investment the government applies to police enforcement. Over the past three decades, U.S. cities have allocated larger and larger shares of their budgets towards law enforcement. Today, the U.S. collectively spends $100 billion a year on policing and a further $80 billion on incarceration. Even though crime levels have dropped substantially over the last 30 years in line with the spending uptake, a report released last month argues that this occurred in spite of higher police budgets. Statistical evidence of a racial indicator of review outcomes could be useful in the progression of the call for change. In the light of recent debates of BLM, the initial hypothesis is that black and Hispanic complainants will correspond with lower levels of severity in review board decisions due to the discrimination and bias often perpetuated against them as well as the history of stop-and-frisk which disproportionately affects these demographics. The  regression of the level of CRRB board decision against the race of the complainant variable should produce a negative, significant coefficient if it supports the hypothesis.
+
+Throughout this inquiry, the data set reference was obtained from the New York City Civilian Complaint Review Board. After New York state repealed the New York legal statute which protected police disciplinary records, known as 50-a, a records request was submitted with New York City's Civilian Complaint Review Board which investigates public complaints on the conduct of NYPD officers. This request produced records about closed cases for every police officer still on the force as of late June 2020 who had at least one substantiated allegation against them. The records span decades, from September 1985 to January 2020. The database contains more than 12,000 civilian complaints filed against New York City police officers. Each record in the data lists the name, rank, shield number, and precinct of each officer as of today and at the time of the incident; the age, race and gender of the complainant and the officer; a category describing the alleged misconduct; and whether the CCRB concluded the officers’ conduct violated NYPD rules. My unit of analysis is the New York City police department and this is a cross-sectional. The independent variable of interest is the race of the complainant in the record. The dependent variable of interest is the severity of the outcome administered to the police officer in question on a 1 to 8 scale. The review board can rule that the complaint was substantiated which means the alleged misconduct occurred and violated the rules, they could rule an exoneration which means the alleged conduct occurred but did not violate NYPD laws, or unsubstantiated which means they could not conclude the conduct occurred.The variable  coded under fado_type describes different types of misconduct such as discourtesy, abuse of authority, and force with more specific descriptions like frisking attached. However, the board could rule that the police officer is exonerated, that the claim is unsubstantiated, the claim is substantiated but the police officer is unidentified, the claim is substantiated but with no outline recommendations, substantiated with reprimanding instructions, substantiated to the extent of command level instructions, substantiated to the extent of formalized training, substantiated to Command Discipline A, substantiated to Command Discipline B, and Substantiated to the point of criminal charges. This chain of consequences is ordered in increasing severity and was coded as such within the data on a 1-8 scale for regression purposes.  The histogram summarizes the dependent variable and shows the distribution of the board levels with a level of 2 as the most common outcome.
+
+```{r}
+allegations|>
+  ggplot(aes(x=Level)) +
+  geom_histogram()
+```
+Results Section 
+
+In investigating this inquiry, a series of visual demonstrations of the data were produced. Below is a bar plot which depicts the total counts of each fado_type of complaint within the data sample including abuse of authority, discourtesy, force, and offensive language. According to this bar plot, the highest complaint type is abuse of authority with over 20,000 complaints. The second bar plot entitled " Racial Breakdown of Complaints" shows the total counts of complaints for each racial demographic, revealing the two highest complainant groups to be Black and Hispanic. Black individuals reaching over 15,000 complaints as opposed to the less than 5000 among white complainants. This suggests the issue of police misconduct to be understood as a prevalent issue within the black community. 
+
+```{r}
+library(tidyverse)
+library(readr)
+CCRB <- read_csv("C:/Users/User/Downloads/CCRB.csv")
+
+Complaints <- CCRB |>
+  group_by(`FADO Category`)|>
+ summarize(Count = sum(`Count of records`))
+Complaints
+
+Allegation_Distribution <- Complaints|> 
+  ggplot(mapping = aes(x = `FADO Category`, y = Count)) +
+  geom_col()+
+  labs(title = "Count of Complaint Types")
+Allegation_Distribution
+```
+```{r}
+library(readr)
+Allegations <- read_csv("C:/Users/User/Downloads/allegations.csv")
+
+Allegations_Race <- Allegations |>
+  group_by(fado_type, complainant_ethnicity)|>
+  summarize(Count=n())
+Allegations_Race
+
+Visualize <- Allegations_Race |> 
+  ggplot(mapping = aes(x = complainant_ethnicity, y = Count )) +
+  geom_col() +
+  labs(x = "Complainant Ethnicity", y = "Count of Complaints", title = "Racial Breakdown of Complaints")
+
+  
+Visualize
+```
+Beyond racial demographics and complaint categories, visual representations of the main relationship of interest was produced alongside a main regression of interest. The box plot entitled Complainant Ethnicity v.s Outcome Level, shows that the median level for each of the racial demographics is at a level two which means that 50 percent of the data falls above a level two and 50 percent falls below a level two for each race. A level two signifies that the complaint was rendered unsubstantiated by the review board. The facet wrapped histograms beneath show the density of outcome for each racial demographic at a bin width of 1. These histograms show that Black and Hispanic have the highest amounts of claims that are considered unsubstantiated by the review board as they have the higher densities of about 0.5 at level two than other races. This is significant because it shows that Black and Hispanic complaints are  resulting in lower amounts of punitive outcomes for officers even on the very basic level of the substance of their complaints. 
+
+```{r}
+allegations|>
+  ggplot(aes(x=complainant_ethnicity, y= Level))+
+  geom_boxplot()+
+  labs(x = "Complainant Ethnicity", y = "Outcome Level", title = "Complaintant Ethnicity v.s Outcome Level")
+```
+```{r}
+allegations|>
+  ggplot(aes(x=Level)) +
+  geom_histogram(aes(y=..density..), binwidth = 1)+
+  facet_wrap(~complainant_ethnicity, nrow=2)
+```
+The regression immediately beneath is a singular regression between the race of the complainant and the outcome severity level on the scale from 1 to 8. Within this regression, a 1 unit increase on the black complainant ethnicity variable, the complainant is Black, is associated with a -0.244 decrease in the outcome severity level. Additionally,  a 1 unit increase on the Hispanic complainant ethnicity variable, the complainant is Hispanic, is associated with a -0.204 decrease in the outcome severity level. The coefficient for black complainants is significant at the 0.001 value because its p value is less than 0.001 which makes it very statistically significant and unlikely to be due to chance. The coefficient for Hispanic complainants is significant at the 0.01 level because it has a p value of 0.004 which is less than an alpha of 0.01 this it is significantly significant. These negative coefficients for this regression suggest that Black and Hispanic complainants are associated with lower penalties for the officers in question. Within the multiple regression, we take into account the race of the officer. A 1 unit increase on the black complainant ethnicity variable, the complainant is Black, is associated with a -0.245 decrease in the outcome severity level, holding the member of service ethnicity fixed. Additionally,  a 1 unit increase on the Hispanic complainant ethnicity variable, the complainant is Hispanic, is associated with a -0.207 decrease in the outcome severity level, holding the member of service ethnicity fixed. The coefficient for black complainants is significant at the 0.001 level because it has a p value less than 0.001 thus it is significantly significant. These negative coefficients for this regression suggest that Black and Hispanic complainants are associated with lower penalties for the officers in question even with the race of the intervening officer held constant.The coefficient for black complainants is significant at the 0.001 value because its p value is less than 0.001 which makes it very statistically significant and unlikely to be due to chance.
+The coefficient for Hispanic complainants is significant at the 0.01 level because it has a p value of 0.004 which is less than an alpha of 0.01 this it is significantly significant.
+These results do not prove causality, but suggest a negative correlation. 
+
+```{r}
+library(broom)
+library(modelsummary)
+fit.allegations <- lm(Level ~ complainant_ethnicity, data = allegations)
+fit.allegations
+ca <- c("complainant_ethnicityBlack"= "Black Complainant", "complainant_ethnicityAmerican Indian"= "American Indian Complainant","complainant_ethnicityAsian" = "Asian Complainant", "complainant_ethnicityHispanic" = "Hispanic Complainant", "complainant_ethnictyOther Race"="Complaintant of Other Race", "complaintantethnicityRefused" = "Refused Racial Identification", "complaintantethnicityUnknown" = "Race Unknown")
+modelsummary(fit.allegations,stars = TRUE, coef_map = ca, statistic = c("s.e. = {std.error}",
+                                         "p = {p.value}"),
+                           gof_map = c("nobs", "r.squared", "adj.r.squared"))
+
+```
+
+
+
+```{r}
+library(broom)
+library(modelsummary)
+allegations$mos_ethnicity <- relevel(factor(allegations$mos_ethnicity), ref="White")
+allegations$complainant_ethnicity <- relevel(factor(allegations$complainant_ethnicity), ref = "White")
+fit5.allegations <- lm(Level ~ complainant_ethnicity + mos_ethnicity, data = allegations)
+cm <- c("complainant_ethnicityBlack"= "Black Complainant", "complainant_ethnicityAmerican Indian"= "American Indian Complainant","complainant_ethnicityAsian" = "Asian Complainant", "complainant_ethnicityHispanic" = "Hispanic Complainant", "complainant_ethnictyOther Race"="Complaintant of Other Race", "complaintantethnicityRefused" = "Refused Racial Identification", "complaintantethnicityUnknown" = "Race Unknown", "mosethnicityAmerican Indian" = "American Indian Member of Service", "mosethnicityAsian"= "Asian Member of Service", "mosethnicityBlack"="Black Member of Service", "mosethnicityHispanic"= "Hispanic Member of Service")
+
+modelsummary(fit5.allegations,stars = TRUE, coef_map = cm,
+                           statistic = c("s.e. = {std.error}",
+                                         "p = {p.value}"),
+                           gof_map = c("nobs", "r.squared", "adj.r.squared"))
+
+```
+
+Conclusion 
+
+In summary, the data analysis above suggests a correlation between the Black and Hispanic race of the complainant and a decrease in the severity level of the review board's decision even when the ethnicity of the member of service is held constant. This supports my hypothesis that black and Hispanic complainants will correspond with lower levels of severity in review board decisions because we saw a negative correlation or a decrease in outcome severity level within these two populations. Although we can not prove causality and would theoretically need a controlled experiment to do so, this is a significant starting point in indicating statistical significance between these two factors and should warrant investigation into the effect race has on review board decisions more broadly. In future studies, it would be helpful to obtain any available notes in these review decisions and code them in order to explain outcome decisions opposed to only observing the outcome without rationale, a limitation of this study. It would also be interesting to run a similar study comparing the race of the complainant and the outcome severity level for complaints that were later found to be substantiated because it would an additional dimension of analysis in terms of the effect race has on review board negligence in decisions which has important implications for vulnerable demographics. 
+
+
